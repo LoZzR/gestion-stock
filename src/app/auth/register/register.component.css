@@ -1,0 +1,9 @@
+img {
+    display: block;
+    max-width: 50%;
+    height: auto;
+}
+
+label {
+    min-width: 200px !important
+}

@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-center">
+      <div class="col-md-6">
+        <div>
+          <div>
+            <img
+            id="profile-img"
+            src="/assets/images/sign-icon.png"
+            class="img-fluid rounded mx-auto d-block"
+           />
+          </div>
+          <form
+            name="form"
+            (ngSubmit)="f.form.valid"
+            #f="ngForm"
+            novalidate
+          >
+            <div class="d-inline-flex align-items-center col-md-12 mb-3">
+              <label for="lastname">Nom :</label>
+              <input
+                type="text"
+                class="form-control"
+                name="lastname"
+                [(ngModel)]="form.lastname"
+                required
+                minlength="3"
+                maxlength="20"
+              />
+            </div>
+            <div class="d-inline-flex align-items-center col-md-12 mb-3">
+              <label for="firstname">Prénom :</label>
+              <input
+                type="text"
+                class="form-control"
+                name="firstname"
+                [(ngModel)]="form.firstname"
+                required
+                minlength="3"
+                maxlength="20"
+              />
+            </div>
+            <div class="d-inline-flex align-items-center col-md-12 mb-3">
+              <label for="email">Email :</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                [(ngModel)]="form.email"
+                required
+                email
+              />
+            </div>
+            <div class="d-inline-flex align-items-center col-md-12 mb-3">
+              <label for="company">Société :</label>
+              <input
+                type="text"
+                class="form-control"
+                name="company"
+                [(ngModel)]="form.company"
+                required
+                minlength="3"
+              />
+            </div>
+            <div class="d-inline-flex align-items-center col-md-12 mb-3">
+              <label for="domain">Secteur :</label>
+              <input
+                type="text"
+                class="form-control"
+                name="domain"
+                [(ngModel)]="form.domain"
+                required
+                minlength="3"
+              />
+            </div>
+            <div class="d-inline-flex align-items-center col-md-12 mb-3">
+              <label for="password">Mot de passe :</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                [(ngModel)]="form.password"
+                required
+                minlength="6"
+              />
+            </div>
+            <div class="d-inline-flex align-items-center col-md-12 mb-3">
+              <label for="password_confirmation">Confirmation du mot de passe :</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password_confirmation"
+                [(ngModel)]="form.password_confirmation"
+                required
+                minlength="6"
+              />
+            </div>
+            <br/>
+            <div class="d-inline-flexcol-md-6 text-center">
+              <button class="btn btn-primary btn-block" [disabled]="!f.form.valid">S'inscrire</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  
