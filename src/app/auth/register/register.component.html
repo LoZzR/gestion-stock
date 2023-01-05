@@ -1,18 +1,15 @@
 <div class="d-flex justify-content-center">
-      <div class="col-md-6">
+      <div class="col-md-10">
         <div>
           <div>
             <img
             id="profile-img"
             src="/assets/images/sign-icon.png"
-            class="img-fluid rounded mx-auto d-block"
            />
           </div>
           <form
             name="form"
-            (ngSubmit)="f.form.valid"
-            #f="ngForm"
-            novalidate
+            #registerForm="ngForm"
           >
             <div class="d-inline-flex align-items-center col-md-12 mb-3">
               <label for="lastname">Nom :</label>
@@ -20,11 +17,17 @@
                 type="text"
                 class="form-control"
                 name="lastname"
-                [(ngModel)]="form.lastname"
+                ngModel
                 required
                 minlength="3"
-                maxlength="20"
+                #lastname="ngModel"
               />
+              <div class="alert-danger" *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+                <div *ngIf="lastname.errors?.['required']">le nom est obligatoire</div>
+                <div *ngIf="lastname.errors?.['minlength']">
+                  La taille du nom minumum est 3 caratères
+                </div>
+              </div>
             </div>
             <div class="d-inline-flex align-items-center col-md-12 mb-3">
               <label for="firstname">Prénom :</label>
@@ -32,11 +35,18 @@
                 type="text"
                 class="form-control"
                 name="firstname"
-                [(ngModel)]="form.firstname"
+                ngModel
                 required
                 minlength="3"
                 maxlength="20"
+                #firstname="ngModel"
               />
+              <div class="alert-danger" *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
+                <div *ngIf="firstname.errors?.['required']">le prénom est obligatoire</div>
+                <div *ngIf="firstname.errors?.['minlength']">
+                  La taille du prénom minumum est 3 caratères
+                </div>
+              </div>
             </div>
             <div class="d-inline-flex align-items-center col-md-12 mb-3">
               <label for="email">Email :</label>
@@ -44,10 +54,17 @@
                 type="email"
                 class="form-control"
                 name="email"
-                [(ngModel)]="form.email"
+                ngModel
                 required
                 email
+                #email="ngModel"
               />
+              <div class="alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                <div *ngIf="email.errors?.['required']">l'email est obligatoire</div>
+                <div *ngIf="email.errors?.['email']">
+                  L'email doit être une adresse mail valide
+                </div>
+              </div>
             </div>
             <div class="d-inline-flex align-items-center col-md-12 mb-3">
               <label for="company">Société :</label>
@@ -55,10 +72,17 @@
                 type="text"
                 class="form-control"
                 name="company"
-                [(ngModel)]="form.company"
+                ngModel
                 required
-                minlength="3"
+                minlength="2"
+                #company="ngModel"
               />
+              <div class="alert-danger" *ngIf="company.invalid && (company.dirty || company.touched)">
+                <div *ngIf="company.errors?.['required']">la Société est obligatoire</div>
+                <div *ngIf="company.errors?.['minlength']">
+                  La taille de la Société minumum est 2 caratères
+                </div>
+              </div>
             </div>
             <div class="d-inline-flex align-items-center col-md-12 mb-3">
               <label for="domain">Secteur :</label>
@@ -66,10 +90,17 @@
                 type="text"
                 class="form-control"
                 name="domain"
-                [(ngModel)]="form.domain"
+                ngModel
                 required
-                minlength="3"
+                minlength="2"
+                #domain="ngModel"
               />
+              <div class="alert-danger" *ngIf="domain.invalid && (domain.dirty || domain.touched)">
+                <div *ngIf="domain.errors?.['required']">le secteur est obligatoire</div>
+                <div *ngIf="domain.errors?.['minlength']">
+                  La taille du secteur minumum est 2 caratères
+                </div>
+              </div>
             </div>
             <div class="d-inline-flex align-items-center col-md-12 mb-3">
               <label for="password">Mot de passe :</label>
@@ -77,10 +108,17 @@
                 type="password"
                 class="form-control"
                 name="password"
-                [(ngModel)]="form.password"
+                [(ngModel)]="passwordValue"
                 required
                 minlength="6"
+                #password="ngModel"
               />
+              <div class="alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                <div *ngIf="password.errors?.['required']">le mot de passe est obligatoire</div>
+                <div *ngIf="password.errors?.['minlength']">
+                  La taille du mot de passe minumum est 6 caratères
+                </div>
+              </div>
             </div>
             <div class="d-inline-flex align-items-center col-md-12 mb-3">
               <label for="password_confirmation">Confirmation du mot de passe :</label>
@@ -88,14 +126,21 @@
                 type="password"
                 class="form-control"
                 name="password_confirmation"
-                [(ngModel)]="form.password_confirmation"
+                [(ngModel)]="passwordConfirmationValue"
                 required
-                minlength="6"
+                #password_confirmation="ngModel"
               />
+              <div class="alert-danger" *ngIf="password_confirmation.dirty || password_confirmation.touched">
+                <div *ngIf="password_confirmation.invalid  && password_confirmation.errors?.['required']">la confirmation du mot de passe est obligatoire</div>
+                <div *ngIf="password_confirmation.valid && passwordConfirmationValue !== '' && passwordConfirmationValue !== passwordValue">
+                  Les deux mots de passe ne sont pas identiques
+                </div>
+              </div>
             </div>
+            <div> {{ passwordConfirmationValue }}</div>
             <br/>
             <div class="d-inline-flexcol-md-6 text-center">
-              <button class="btn btn-primary btn-block" [disabled]="!f.form.valid">S'inscrire</button>
+              <button class="btn btn-success" [disabled]="!registerForm.form.valid">S'inscrire</button>
             </div>
           </form>
         </div>

@@ -1,9 +1,24 @@
 img {
-    display: block;
-    max-width: 50%;
-    height: auto;
+    max-width: 25%;
 }
 
 label {
-    min-width: 200px !important
+    min-width: 250px !important
+}
+
+.alert-danger{
+    margin-left: 2%;
+    color: red;
+}
+
+input {
+    width: 40%;
+}
+
+.ng-touched.ng-invalid {
+    border-color: red;
+  }
+
+.ng-dirty.ng-invalid {
+    border-color: red;
 }
