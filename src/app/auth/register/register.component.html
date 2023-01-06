@@ -10,6 +10,7 @@
           <form
             name="form"
             #registerForm="ngForm"
+            (ngSubmit)="onSubmit(registerForm)"
           >
             <div class="d-inline-flex align-items-center col-md-12 mb-3">
               <label for="lastname">Nom :</label>
@@ -140,7 +141,7 @@
             <div> {{ passwordConfirmationValue }}</div>
             <br/>
             <div class="d-inline-flexcol-md-6 text-center">
-              <button class="btn btn-success" [disabled]="!registerForm.form.valid">S'inscrire</button>
+              <button class="btn btn-success" type="submit" [disabled]="!registerForm.valid">S'inscrire</button>
             </div>
           </form>
         </div>
