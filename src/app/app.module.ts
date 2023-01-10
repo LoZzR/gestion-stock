@@ -17,6 +17,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { MainComponent } from './shared/main/main.component';
+import { EntrepriseComponent } from './entreprise/entreprise.component';
+import { StoreListComponent } from './stores/store-list/store-list.component';
+import { ArticleListComponent } from './articles/article-list/article-list.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { MainComponent } from './shared/main/main.component';
     LoginComponent,
     RegisterComponent,
     WelcomeComponent,
-    MainComponent
+    MainComponent,
+    EntrepriseComponent,
+    StoreListComponent,
+    ArticleListComponent
   ],
   imports: [
     BrowserModule,
