@@ -6,3 +6,7 @@ a {
     
     color: white;
 }
+
+.active > a {
+    color: red;
+}
