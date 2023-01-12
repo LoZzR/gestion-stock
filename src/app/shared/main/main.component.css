@@ -1,12 +1,15 @@
-ul {
+.row {
+    margin-right: 0%;
+}
+
+.nav {
     background-color: #446CB3;
 }
 
-a {
-    
+button {
     color: white;
 }
 
-.active > a {
-    color: red;
+button:hover {
+    color: rgb(215, 210, 210);
 }
