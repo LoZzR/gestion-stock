@@ -20,4 +20,16 @@ export class EntrepriseComponent implements OnInit {
     });*/
   }
 
+  onSaveData(): void {
+    console.log('onSaveData clicked');
+    this.entrepriseService.storeListEntreprise();
+  }
+
+  getEntreprise(): void {
+    console.log('getEntreprise clicked');
+    this.entrepriseService.getEntrepriseById().subscribe((entreprise) => {
+      console.log(entreprise);
+    });
+  }
+
 }
