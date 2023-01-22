@@ -32,6 +32,6 @@ export class EntrepriseService {
         '/entreprises.json', entreprise
       ).subscribe(response => {
         console.log(response);
-      });;
+      });
   }
 }

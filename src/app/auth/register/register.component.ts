@@ -26,7 +26,10 @@ export class RegisterComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.authService.signup(form.value.email, form.value.password).subscribe(
+    this.authService.signup(form.value.email,
+      form.value.password,
+      form.value.firstname,
+      form.value.lastname).subscribe(
       resData => {
         console.log(resData);
         this.isLoading = false;
@@ -37,7 +40,7 @@ export class RegisterComponent implements OnInit {
         this.isLoading = false;
       }
     );
-    
+
     form.reset();
   }
 }

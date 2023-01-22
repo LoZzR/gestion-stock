@@ -23,7 +23,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  signup(email: string, password: string) {
+  signup(email: string, password: string, firstname: string, lastname: string) {
     return this.http
       .post<AuthResponseData>(
         'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBycfUGdH6urb3nVp6tSbWjEW1plCXFgqE',
@@ -39,6 +39,8 @@ export class AuthService {
           this.handleAuthentication(
             resData.email,
             resData.localId,
+            firstname,
+            lastname,
             resData.idToken,
             +resData.expiresIn
           );
@@ -51,14 +53,25 @@ export class AuthService {
    
   }
 
+  private saveUser(user: User) {
+    return this.http
+      .post(
+        '/users.json', user
+      ).subscribe();
+  }
+
   private handleAuthentication(
     email: string,
     userId: string,
+    firstname: string,
+    lastname: string,
     token: string,
     expiresIn: number
   ) {
+    const userInfo = new User(userId, firstname, lastname);
+    this.saveUser(userInfo);
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, userId, token, expirationDate);
+    const user = new User(userId, firstname, lastname, email, token, expirationDate);
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
   }
