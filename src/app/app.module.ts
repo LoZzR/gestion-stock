@@ -15,6 +15,7 @@ import { EntrepriseComponent } from './entreprise/entreprise.component';
 import { StoreListComponent } from './stores/store-list/store-list.component';
 import { ArticleListComponent } from './articles/article-list/article-list.component';
 import { RequestInterceptor } from './shared/interceptors/request.interceptor';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { RequestInterceptor } from './shared/interceptors/request.interceptor';
     MainComponent,
     EntrepriseComponent,
     StoreListComponent,
-    ArticleListComponent
+    ArticleListComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

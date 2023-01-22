@@ -18,20 +18,18 @@ export class EntrepriseService {
       );
   }
 
-  getEntrepriseById(): Observable<Entreprise> {
+  getEntrepriseByIdUser(userId: string): Observable<Entreprise> {
     return this.http
       .get<Entreprise>(
-        '/entreprises/-NMBNbtM_mX4Eoak-n00.json'
+        '/entreprises.json?userid=' + userId
       );
   }
 
-  storeListEntreprise() {
-    const entreprise = new Entreprise('test2', 'test2', 'test2');
+  storeEntreprise(name: string, domain: string, adress: string, userId: string) {
+    const entreprise = new Entreprise(name, domain, adress, userId);
     return this.http
       .post(
         '/entreprises.json', entreprise
-      ).subscribe(response => {
-        console.log(response);
-      });
+      );
   }
 }
