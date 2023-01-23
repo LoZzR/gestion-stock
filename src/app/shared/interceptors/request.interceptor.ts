@@ -9,7 +9,8 @@ import { environment } from 'src/environments/environment';
 export class RequestInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url.indexOf('signup') > -1 || request.url.indexOf('signin') > -1) {
+    // signup and signin apis have different base url
+    if (request.url.indexOf('signup') > -1 || request.url.indexOf('verifyPassword') > -1) {
       return next.handle(request);
     }
 

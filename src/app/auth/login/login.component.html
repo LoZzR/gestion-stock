@@ -1,1 +1,57 @@
-<p>login works!</p>
+<div class="d-flex justify-content-center">
+    <div class="col-md-10">
+      <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <div *ngIf="!isLoading">
+        <div>
+          <img
+          id="profile-img"
+          src="/assets/images/sign-icon.png"
+         />
+        </div>
+        <form
+          name="form"
+          #loginForm="ngForm"
+          (ngSubmit)="onSubmit(loginForm)"
+        >
+          <div class="d-inline-flex align-items-center col-md-12 mb-3">
+            <label for="email">Email :</label>
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              ngModel
+              required
+              email
+              #email="ngModel"
+            />
+            <div class="alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+              <div *ngIf="email.errors?.['required']">l'email est obligatoire</div>
+              <div *ngIf="email.errors?.['email']">
+                L'email doit être une adresse mail valide
+              </div>
+            </div>
+          </div>
+          <div class="d-inline-flex align-items-center col-md-12 mb-3">
+            <label for="password">Mot de passe :</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              ngModel
+              required
+              #password="ngModel"
+            />
+            <div class="alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+              <div *ngIf="password.errors?.['required']">le mot de passe est obligatoire</div>
+            </div>
+          </div>
+          <br/>
+          <div class="d-inline-flexcol-md-6 text-center">
+            <button class="btn btn-success" type="submit" [disabled]="!loginForm.valid">Se connecter</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

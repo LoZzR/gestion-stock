@@ -42,7 +42,8 @@ export class AuthService {
             firstname,
             lastname,
             resData.idToken,
-            +resData.expiresIn
+            +resData.expiresIn,
+            true
           );
         })
       );
@@ -50,7 +51,37 @@ export class AuthService {
 
   // Sign in with email/password
   signIn(email: string, password: string) {
+    return this.http
+      .post<AuthResponseData>(
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyBycfUGdH6urb3nVp6tSbWjEW1plCXFgqE',
+        {
+          email: email,
+          password: password,
+          returnSecureToken: true
+        }
+      ).pipe(catchError(this.handleError));
    
+  }
+
+  setAuthenticatedUserInfos(resData: AuthResponseData) {
+    return this.http
+      .get<User>(
+        '/users.json?userid=' + resData.localId
+      )
+      .pipe(
+        catchError(this.handleError),
+        tap((user: User) => {
+          this.handleAuthentication(
+            resData.email,
+            resData.localId,
+            user.firstname,
+            user.lastname,
+            resData.idToken,
+            +resData.expiresIn,
+            false
+          );
+        })
+      );
   }
 
   private saveUser(user: User) {
@@ -66,10 +97,11 @@ export class AuthService {
     firstname: string,
     lastname: string,
     token: string,
-    expiresIn: number
+    expiresIn: number,
+    isSignup: boolean
   ) {
     const userInfo = new User(userId, firstname, lastname);
-    this.saveUser(userInfo);
+    if (isSignup) this.saveUser(userInfo);
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(userId, firstname, lastname, email, token, expirationDate);
     this.user.next(user);
