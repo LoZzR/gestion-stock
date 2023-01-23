@@ -65,17 +65,18 @@ export class AuthService {
 
   setAuthenticatedUserInfos(resData: AuthResponseData) {
     return this.http
-      .get<User>(
-        '/users.json?userid=' + resData.localId
+      .get(
+        '/users.json?orderBy="id"&equalTo="' + resData.localId + '"'
       )
       .pipe(
         catchError(this.handleError),
-        tap((user: User) => {
+        tap((user) => {
+          const userInfo = Object.values(user)[0];
           this.handleAuthentication(
             resData.email,
             resData.localId,
-            user.firstname,
-            user.lastname,
+            userInfo['firstname'],
+            userInfo['lastname'],
             resData.idToken,
             +resData.expiresIn,
             false

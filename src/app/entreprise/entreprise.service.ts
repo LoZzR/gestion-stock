@@ -21,7 +21,7 @@ export class EntrepriseService {
   getEntrepriseByIdUser(userId: string): Observable<Entreprise> {
     return this.http
       .get<Entreprise>(
-        '/entreprises.json?userid=' + userId
+        '/entreprises.json?orderBy="userId"&equalTo="'+ userId + '"'
       );
   }
 
