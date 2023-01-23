@@ -6,6 +6,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { EntrepriseComponent } from './entreprise/entreprise.component';
 import { HomeComponent } from './home/home.component';
 import { MainComponent } from './shared/main/main.component';
+import { AuthGuard } from './shared/services/auth.guard';
 import { StoreListComponent } from './stores/store-list/store-list.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
@@ -14,11 +15,13 @@ const routes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "signin", component: LoginComponent },
   { path: "signup", component: RegisterComponent },
-  { path: "main", component: MainComponent, children: [
-    { path: "", component: WelcomeComponent },
-    { path: "entreprise", component: EntrepriseComponent },
-    { path: "magasins", component: StoreListComponent },
-    { path: "articles", component: ArticleListComponent }
+  { path: "main", component: MainComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: "", component: WelcomeComponent },
+      { path: "entreprise", component: EntrepriseComponent },
+      { path: "magasins", component: StoreListComponent },
+      { path: "articles", component: ArticleListComponent }
   ]}
 ];
 
