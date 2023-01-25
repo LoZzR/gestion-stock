@@ -27,9 +27,7 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(form.value.email,
       form.value.password).subscribe(
       resData => {
-        console.log(resData);
         this.authService.setAuthenticatedUserInfos(resData).subscribe((user) => {
-          console.log(user);
           this.isLoading = false;
           this.router.navigate(['/main']);}
         )

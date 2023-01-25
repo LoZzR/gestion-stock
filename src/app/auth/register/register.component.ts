@@ -31,7 +31,6 @@ export class RegisterComponent implements OnInit {
       form.value.firstname,
       form.value.lastname).subscribe(
       resData => {
-        console.log(resData);
         this.isLoading = false;
         this.router.navigate(['/main']);
       },
