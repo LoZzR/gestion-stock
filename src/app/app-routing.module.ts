@@ -11,7 +11,7 @@ import { StoreListComponent } from './stores/store-list/store-list.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: "/home", pathMatch: "full" },
+  { path: "", redirectTo: "/main", pathMatch: "full" },
   { path: "home", component: HomeComponent },
   { path: "signin", component: LoginComponent },
   { path: "signup", component: RegisterComponent },
