@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Entreprise } from './entreprise.model';
 import { EntrepriseService } from './entreprise.service';
 
 @Component({
@@ -9,9 +10,11 @@ import { EntrepriseService } from './entreprise.service';
   styleUrls: ['./entreprise.component.css']
 })
 export class EntrepriseComponent implements OnInit {
+  @ViewChild('entrepriseForm', { static: false }) entrepriseForm: NgForm = null!;
   isLoading = false;
-  userId = null;
+  private userId = null;
   isSucessSave = false;
+  isNewEntreprise = false;
 
   constructor(private entrepriseService: EntrepriseService, private router: Router) { }
 
@@ -19,9 +22,13 @@ export class EntrepriseComponent implements OnInit {
     const currentUserJson = localStorage.getItem('userData');
     const currentUser = currentUserJson !== null ? JSON.parse(currentUserJson) : null;
     this.userId = currentUser.id;
-    this.entrepriseService.getEntrepriseByIdUser(currentUser.id).subscribe(responseData => {
-      console.log('*****************************');
-      console.log(responseData);
+    this.entrepriseService.getEntrepriseByIdUser(currentUser.id).subscribe((entreprise: Entreprise) => {
+        this.isNewEntreprise = !entreprise;
+        this.entrepriseForm.setValue({
+          company: entreprise.name,
+          domain: entreprise.domain,
+          adress: entreprise.adress
+        })
     })
 
   }
