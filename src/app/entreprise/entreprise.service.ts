@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Entreprise } from './entreprise.model';
 
 @Injectable({
@@ -22,7 +23,9 @@ export class EntrepriseService {
     return this.http
       .get<Entreprise>(
         '/entreprises.json?orderBy="userId"&equalTo="'+ userId + '"'
-      );
+      ).pipe(map(entrepriseWrapper => {
+          return Object.values(entrepriseWrapper)[0];
+      }));
   }
 
   storeEntreprise(name: string, domain: string, adress: string, userId: string) {
