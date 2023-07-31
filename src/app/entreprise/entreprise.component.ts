@@ -15,22 +15,12 @@ export class EntrepriseComponent implements OnInit {
   private userId = null;
   isSucessSave = false;
   isNewEntreprise = false;
+  isModify = false;
 
   constructor(private entrepriseService: EntrepriseService, private router: Router) { }
 
   ngOnInit() {
-    const currentUserJson = localStorage.getItem('userData');
-    const currentUser = currentUserJson !== null ? JSON.parse(currentUserJson) : null;
-    this.userId = currentUser.id;
-    this.entrepriseService.getEntrepriseByIdUser(currentUser.id).subscribe((entreprise: Entreprise) => {
-        this.isNewEntreprise = !entreprise;
-        this.entrepriseForm.setValue({
-          company: entreprise.name,
-          domain: entreprise.domain,
-          adress: entreprise.adress
-        })
-    })
-
+    this.getCurrentEntreprise();
   }
 
   saveEntreprise(form: NgForm) {
@@ -52,6 +42,37 @@ export class EntrepriseComponent implements OnInit {
     );
 
     form.reset();
+  }
+
+  modifyEntreprise() {
+    this.isModify = true;
+  }
+
+  cancel(){
+    this.getCurrentEntreprise();
+    this.isModify = false;
+  }
+
+  createNewEntreprise() {
+    this.isNewEntreprise = false;
+    this.isModify = true;
+  }
+
+  private getCurrentEntreprise() {
+    const currentUserJson = localStorage.getItem('userData');
+    const currentUser = currentUserJson !== null ? JSON.parse(currentUserJson) : null;
+    this.userId = currentUser.id;
+    this.entrepriseService.getEntrepriseByIdUser(currentUser.id).subscribe((entreprise: Entreprise) => {
+        this.isNewEntreprise = !entreprise;
+        if(!this.isNewEntreprise) {
+          this.entrepriseForm.setValue({
+            company: entreprise.name,
+            domain: entreprise.domain,
+            adress: entreprise.adress
+          })
+        }
+    })
+
   }
 
 }
