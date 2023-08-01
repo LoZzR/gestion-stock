@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Entreprise } from './entreprise.model';
 import { EntrepriseService } from './entreprise.service';
+import { USER_KEY } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-entreprise',
@@ -59,7 +60,7 @@ export class EntrepriseComponent implements OnInit {
   }
 
   private getCurrentEntreprise() {
-    const currentUserJson = localStorage.getItem('userData');
+    const currentUserJson = localStorage.getItem(USER_KEY);
     const currentUser = currentUserJson !== null ? JSON.parse(currentUserJson) : null;
     this.userId = currentUser.id;
     this.entrepriseService.getEntrepriseByIdUser(currentUser.id).subscribe((entreprise: Entreprise) => {

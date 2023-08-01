@@ -4,6 +4,9 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/c
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
+import { TOKEN_KEY } from '../services/auth.service';
+
+const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
@@ -16,7 +19,7 @@ export class RequestInterceptor implements HttpInterceptor {
 
     return next.handle(
       request.clone({
-        url: environment.backend.url + request.url,
+        url: environment.backend.url + request.url + '&auth=' + localStorage.getItem(TOKEN_KEY)
       })
     );
   }

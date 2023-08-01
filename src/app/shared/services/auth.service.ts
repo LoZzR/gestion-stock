@@ -16,6 +16,9 @@ export interface AuthResponseData {
   registered?: boolean;
 }
 
+export const TOKEN_KEY = 'auth-token';
+export const USER_KEY = 'auth-user';
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User>(null!);
@@ -36,6 +39,7 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(resData => {
+          this.saveToken(resData.idToken);
           this.handleAuthentication(
             resData.email,
             resData.localId,
@@ -59,8 +63,12 @@ export class AuthService {
           password: password,
           returnSecureToken: true
         }
-      ).pipe(catchError(this.handleError));
-   
+      ).pipe(
+        catchError(this.handleError),
+        tap((resData: AuthResponseData) => {
+          this.saveToken(resData.idToken);
+          })
+        );
   }
 
   setAuthenticatedUserInfos(resData: AuthResponseData) {
@@ -93,7 +101,7 @@ export class AuthService {
       email: string;
      _token: string;
     _tokenExpirationDate: Date;
-    } = JSON.parse(localStorage.getItem('userData')!);
+    } = JSON.parse(localStorage.getItem(USER_KEY)!);
     if (!userData) {
       return;
     }
@@ -119,7 +127,8 @@ export class AuthService {
   logout() {
     this.user.next(null!);
     this.router.navigate(['/signin']);
-    localStorage.removeItem('userData');
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
@@ -154,7 +163,13 @@ export class AuthService {
     const user = new User(userId, firstname, lastname, email, token, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));
+    localStorage.removeItem(USER_KEY);
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  private saveToken(token: string) {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.setItem(TOKEN_KEY, token);
   }
 
   private handleError(errorRes: HttpErrorResponse) {
