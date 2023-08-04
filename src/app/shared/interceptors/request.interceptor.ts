@@ -19,7 +19,7 @@ export class RequestInterceptor implements HttpInterceptor {
 
     return next.handle(
       request.clone({
-        url: environment.backend.url + request.url + '&auth=' + localStorage.getItem(TOKEN_KEY)
+        url: environment.backend.url + request.url
       })
     );
   }
