@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '../store.model';
 
 @Component({
@@ -8,6 +8,7 @@ import { Store } from '../store.model';
 })
 export class StoreComponent implements OnInit {
 
+  @Input()
   store: Store = new Store("test", "test", "test", "test");
 
   constructor() { }

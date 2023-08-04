@@ -1,1 +1,5 @@
-<app-store></app-store>
+<div class="row">
+    <div class="col-sm-4" *ngFor="let store of stores">
+        <app-store [store]="store"></app-store>
+    </div>
+</div>
