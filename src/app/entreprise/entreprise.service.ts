@@ -1,29 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Entreprise } from './entreprise.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EntrepriseService {
+  
+  currentEntrepriseId = new BehaviorSubject<String>(null!);
 
   constructor(private http: HttpClient) {
-  }
-
-  getListEntreprise(): Observable<Entreprise[]> {
-    return this.http
-      .get<Entreprise[]>(
-        '/entreprises.json'
-      );
   }
 
   getEntrepriseByIdUser(userId: string): Observable<Entreprise> {
     return this.http
       .get<Entreprise>(
         '/entreprises.json?orderBy="userId"&equalTo="'+ userId + '"'
-      ).pipe(map(entrepriseWrapper => {
+      ).pipe(
+        tap( (entrepriseWrapper) => {
+          if(entrepriseWrapper === null) {}
+          else this.currentEntrepriseId.next(Object.keys(entrepriseWrapper)[0]);
+        }),
+        map(entrepriseWrapper => {
           return Object.values(entrepriseWrapper)[0];
       }));
   }

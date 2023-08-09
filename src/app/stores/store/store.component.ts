@@ -9,7 +9,7 @@ import { Store } from '../store.model';
 export class StoreComponent implements OnInit {
 
   @Input()
-  store: Store = new Store("test", "test", "test", "test");
+  store: Store = null!;
 
   constructor() { }
 

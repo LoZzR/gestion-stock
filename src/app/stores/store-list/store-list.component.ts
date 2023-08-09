@@ -1,20 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '../store.model';
+import { Entreprise } from 'src/app/entreprise/entreprise.model';
+import { Subscription } from 'rxjs';
+import { EntrepriseService } from 'src/app/entreprise/entreprise.service';
+import { StoreService } from '../store.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-store-list',
   templateUrl: './store-list.component.html',
   styleUrls: ['./store-list.component.css']
 })
-export class StoreListComponent implements OnInit {
+export class StoreListComponent  implements OnInit, OnDestroy {
 
-  stores: Store[] = [new Store("test1", "test1", "test1", "test1"),
-                      new Store("test2", "test2", "test2", "test2"),
-                      new Store("test3", "test3", "test3", "test3")
-                    ];
-  constructor() { }
+  private entrepriseWrapperSub: Subscription = null!;
+  entreprise: Entreprise = null!;
+  stores: Store[] = null!;
+  editStore = false;
+
+  constructor(private entrepriseService: EntrepriseService, private storeService: StoreService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.entrepriseWrapperSub = this.entrepriseService.currentEntrepriseId.subscribe((entrepriseId: String) => {
+      this.stores = this.storeService.getListStoreByIdEntreprise(entrepriseId);
+    });
+  }
+
+  addSotre() {
+    this.editStore = true;
+    this.router.navigate(['edit'], { relativeTo: this.route });
+  }
+
+  ngOnDestroy() {
+    this.entrepriseWrapperSub.unsubscribe();
   }
 
 }

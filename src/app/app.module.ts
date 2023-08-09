@@ -17,6 +17,7 @@ import { ArticleListComponent } from './articles/article-list/article-list.compo
 import { RequestInterceptor } from './shared/interceptors/request.interceptor';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { StoreComponent } from './stores/store/store.component';
+import { EditStoreComponent } from './stores/edit-store/edit-store.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { StoreComponent } from './stores/store/store.component';
     StoreListComponent,
     ArticleListComponent,
     LoadingSpinnerComponent,
-    StoreComponent
+    StoreComponent,
+    EditStoreComponent
   ],
   imports: [
     BrowserModule,

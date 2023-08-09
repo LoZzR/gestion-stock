@@ -9,6 +9,7 @@ import { MainComponent } from './shared/main/main.component';
 import { AuthGuard } from './shared/services/auth.guard';
 import { StoreListComponent } from './stores/store-list/store-list.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { EditStoreComponent } from './stores/edit-store/edit-store.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/main", pathMatch: "full" },
@@ -20,8 +21,11 @@ const routes: Routes = [
     children: [
       { path: "", component: WelcomeComponent },
       { path: "entreprise", component: EntrepriseComponent },
-      { path: "magasins", component: StoreListComponent },
-      { path: "articles", component: ArticleListComponent }
+      { path: "magasins", component: StoreListComponent,
+        children: [
+          { path: "edit", component: EditStoreComponent }
+        ]},
+      { path: "articles", component: ArticleListComponent,}
   ]}
 ];
 
