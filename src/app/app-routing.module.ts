@@ -21,10 +21,8 @@ const routes: Routes = [
     children: [
       { path: "", component: WelcomeComponent },
       { path: "entreprise", component: EntrepriseComponent },
-      { path: "magasins", component: StoreListComponent,
-        children: [
-          { path: "edit", component: EditStoreComponent }
-        ]},
+      { path: "magasins", component: StoreListComponent },
+      { path: "edit-magasin", component: EditStoreComponent },
       { path: "articles", component: ArticleListComponent,}
   ]}
 ];

@@ -4,7 +4,7 @@ import { Entreprise } from 'src/app/entreprise/entreprise.model';
 import { Subscription } from 'rxjs';
 import { EntrepriseService } from 'src/app/entreprise/entreprise.service';
 import { StoreService } from '../store.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-store-list',
@@ -18,7 +18,7 @@ export class StoreListComponent  implements OnInit, OnDestroy {
   stores: Store[] = null!;
   editStore = false;
 
-  constructor(private entrepriseService: EntrepriseService, private storeService: StoreService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private entrepriseService: EntrepriseService, private storeService: StoreService, private router: Router) { }
 
   ngOnInit(): void {
     this.entrepriseWrapperSub = this.entrepriseService.currentEntrepriseId.subscribe((entrepriseId: String) => {
@@ -27,8 +27,7 @@ export class StoreListComponent  implements OnInit, OnDestroy {
   }
 
   addSotre() {
-    this.editStore = true;
-    this.router.navigate(['edit'], { relativeTo: this.route });
+    this.router.navigateByUrl ('/main/edit-magasin');
   }
 
   ngOnDestroy() {
