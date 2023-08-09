@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Entreprise } from './entreprise.model';
 import { EntrepriseService } from './entreprise.service';
 import { USER_KEY } from '../shared/services/auth.service';
@@ -18,7 +17,7 @@ export class EntrepriseComponent implements OnInit {
   isNewEntreprise = false;
   isModify = false;
 
-  constructor(private entrepriseService: EntrepriseService, private router: Router) { }
+  constructor(private entrepriseService: EntrepriseService) { }
 
   ngOnInit() {
     this.getCurrentEntreprise();
@@ -39,6 +38,7 @@ export class EntrepriseComponent implements OnInit {
       errorMessage => {
         console.log(errorMessage);
         this.isLoading = false;
+        this.isSucessSave = false;
       }
     );
 

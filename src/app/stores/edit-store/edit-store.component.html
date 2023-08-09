@@ -1,7 +1,12 @@
 <div class="d-flex">
+  <div *ngIf="!isSucessSave && isLoading" style="text-align: center;">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
     <form
     name="form"
     #storeForm="ngForm"
+    (ngSubmit)="addStore(storeForm)"
+    *ngIf="!isSucessSave && !isLoading"
   >
     <div class="d-inline-flex align-items-center col-md-12 mb-3">
       <label for="title">Nom magasin :</label>
@@ -38,8 +43,11 @@
     </div>
     <br/>
     <div class="d-inline-flexcol-md-6 text-center">
-      <button class="btn btn-success" type="submit" >Enregister</button>
-      <button class="btn btn-success" type="button" >Annuler</button>
+        <button class="btn btn-success" type="submit" [disabled]="!storeForm.valid">Enregister</button>
+        <button class="btn btn-success" type="button" (click)="cancel(storeForm)">Annuler</button>
     </div>
   </form>
+</div>
+<div class="alert alert-success" role="alert" *ngIf="isSucessSave && !isLoading">
+  Vos changements sont bien enregistrés !
 </div>

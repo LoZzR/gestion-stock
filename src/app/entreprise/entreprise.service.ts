@@ -9,7 +9,7 @@ import { Entreprise } from './entreprise.model';
 })
 export class EntrepriseService {
   
-  currentEntrepriseId = new BehaviorSubject<String>(null!);
+  currentEntrepriseId = new BehaviorSubject<string>(null!);
 
   constructor(private http: HttpClient) {
   }
