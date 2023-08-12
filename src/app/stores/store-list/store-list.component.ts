@@ -21,8 +21,10 @@ export class StoreListComponent  implements OnInit, OnDestroy {
   constructor(private entrepriseService: EntrepriseService, private storeService: StoreService, private router: Router) { }
 
   ngOnInit(): void {
-    this.entrepriseWrapperSub = this.entrepriseService.currentEntrepriseId.subscribe((entrepriseId: String) => {
-      this.stores = this.storeService.getListStoreByIdEntreprise(entrepriseId);
+    this.entrepriseWrapperSub = this.entrepriseService.currentEntrepriseId.subscribe((entrepriseId: string) => {
+      this.storeService.getListStoreById(entrepriseId).subscribe((stores: Store[]) => {
+        this.stores = stores.slice();
+      });
     });
   }
 
