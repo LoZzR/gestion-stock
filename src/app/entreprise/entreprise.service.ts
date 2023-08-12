@@ -10,11 +10,12 @@ import { Entreprise } from './entreprise.model';
 export class EntrepriseService {
   
   currentEntrepriseId = new BehaviorSubject<string>(null!);
+  currentEntreprise = new BehaviorSubject<Entreprise>(null!);
 
   constructor(private http: HttpClient) {
   }
 
-  getEntrepriseByIdUser(userId: string): Observable<Entreprise> {
+  getEntrepriseByIdUser(userId: string): Observable<void> {
     return this.http
       .get<Entreprise>(
         '/entreprises.json?orderBy="userId"&equalTo="'+ userId + '"'
@@ -24,7 +25,7 @@ export class EntrepriseService {
           else this.currentEntrepriseId.next(Object.keys(entrepriseWrapper)[0]);
         }),
         map(entrepriseWrapper => {
-          return Object.values(entrepriseWrapper)[0];
+          this.currentEntreprise.next(Object.values(entrepriseWrapper)[0]);;
       }));
   }
 

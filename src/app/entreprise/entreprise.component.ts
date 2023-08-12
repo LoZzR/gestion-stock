@@ -1,16 +1,18 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Entreprise } from './entreprise.model';
 import { EntrepriseService } from './entreprise.service';
 import { USER_KEY } from '../shared/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-entreprise',
   templateUrl: './entreprise.component.html',
   styleUrls: ['./entreprise.component.css']
 })
-export class EntrepriseComponent implements OnInit {
-  @ViewChild('entrepriseForm', { static: false }) entrepriseForm: NgForm = null!;
+export class EntrepriseComponent implements OnInit, OnDestroy  {
+  @ViewChildren('entrepriseForm') entrepriseForm: QueryList<NgForm> = null!;
+  private entrepriseSub: Subscription = null!;
   isLoading = false;
   private userId = null;
   isSucessSave = false;
@@ -59,21 +61,26 @@ export class EntrepriseComponent implements OnInit {
     this.isModify = true;
   }
 
+  ngOnDestroy() {
+    this.entrepriseSub.unsubscribe();
+  }
+
   private getCurrentEntreprise() {
     const currentUserJson = localStorage.getItem(USER_KEY);
     const currentUser = currentUserJson !== null ? JSON.parse(currentUserJson) : null;
     this.userId = currentUser.id;
-    this.entrepriseService.getEntrepriseByIdUser(currentUser.id).subscribe((entreprise: Entreprise) => {
+    this.entrepriseSub = this.entrepriseService.currentEntreprise.subscribe((entreprise: Entreprise) => {
         this.isNewEntreprise = !entreprise;
         if(!this.isNewEntreprise) {
-          this.entrepriseForm.setValue({
-            company: entreprise.name,
-            domain: entreprise.domain,
-            adress: entreprise.adress
-          })
+          setTimeout(() => {
+            this.entrepriseForm.first.setValue({
+              company: entreprise.name,
+              domain: entreprise.domain,
+              adress: entreprise.adress
+            })
+          });
         }
-    })
-
+    });
   }
 
 }
