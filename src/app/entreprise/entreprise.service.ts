@@ -36,4 +36,11 @@ export class EntrepriseService {
         '/entreprises.json', entreprise
       );
   }
+
+  updateEntreprise(idEntreprise: string, entreprise: Entreprise) {
+    return this.http
+      .put(
+        '/entreprises/' + idEntreprise + '.json', entreprise
+      );
+  }
 }

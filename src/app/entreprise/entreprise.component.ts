@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 export class EntrepriseComponent implements OnInit, OnDestroy  {
   @ViewChildren('entrepriseForm') entrepriseForm: QueryList<NgForm> = null!;
   private entrepriseSub: Subscription = null!;
+  private entrepriseIdSub: Subscription = null!;
   isLoading = false;
   private userId = null;
   isSucessSave = false;
@@ -32,17 +33,34 @@ export class EntrepriseComponent implements OnInit, OnDestroy  {
 
     this.isLoading = true;
 
-    this.entrepriseService.storeEntreprise(form.value.company, form.value.domain, form.value.adress, this.userId!).subscribe(
-      resData => {
-        this.isLoading = false;
-        this.isSucessSave = true;
-      },
-      errorMessage => {
-        console.log(errorMessage);
-        this.isLoading = false;
-        this.isSucessSave = false;
-      }
-    );
+    if(!this.isNewEntreprise) {
+      this.entrepriseIdSub = this.entrepriseService.currentEntrepriseId.subscribe((entrepriseId: string) => {
+        this.entrepriseService.updateEntreprise(entrepriseId, new Entreprise(form.value.company, form.value.domain, form.value.adress, this.userId!)).subscribe(
+          resData => {
+            this.isLoading = false;
+            this.isSucessSave = true;
+          },
+          errorMessage => {
+            console.log(errorMessage);
+            this.isLoading = false;
+            this.isSucessSave = false;
+          }
+        );
+      });
+    }
+    else {
+      this.entrepriseService.storeEntreprise(form.value.company, form.value.domain, form.value.adress, this.userId!).subscribe(
+        resData => {
+          this.isLoading = false;
+          this.isSucessSave = true;
+        },
+        errorMessage => {
+          console.log(errorMessage);
+          this.isLoading = false;
+          this.isSucessSave = false;
+        }
+      );
+    }
 
     form.reset();
   }
@@ -63,6 +81,7 @@ export class EntrepriseComponent implements OnInit, OnDestroy  {
 
   ngOnDestroy() {
     this.entrepriseSub.unsubscribe();
+    if(this.entrepriseIdSub !== null) this.entrepriseIdSub.unsubscribe();
   }
 
   private getCurrentEntreprise() {
