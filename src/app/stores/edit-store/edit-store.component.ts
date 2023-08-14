@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { StoreService } from '../store.service';
 import { EntrepriseService } from 'src/app/entreprise/entreprise.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-store',
@@ -16,7 +17,9 @@ export class EditStoreComponent implements OnInit, OnDestroy {
   isSucessSave = false;
   private idCurrentEntreprise: string = null!;
 
-  constructor(private storeService: StoreService, private entrepriseService: EntrepriseService) { }
+  constructor(private storeService: StoreService,
+              private entrepriseService: EntrepriseService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.storeWrapperSub = this.entrepriseService.currentEntrepriseId.subscribe((entrepriseId: string) => {
@@ -48,6 +51,10 @@ export class EditStoreComponent implements OnInit, OnDestroy {
 
   cancel(form: NgForm){
     form.reset();
+  }
+
+  previousPage() {
+    this.router.navigate(['']);
   }
 
   ngOnDestroy() {

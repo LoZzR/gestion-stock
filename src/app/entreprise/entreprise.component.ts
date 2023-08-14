@@ -4,6 +4,7 @@ import { Entreprise } from './entreprise.model';
 import { EntrepriseService } from './entreprise.service';
 import { USER_KEY } from '../shared/services/auth.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entreprise',
@@ -20,7 +21,7 @@ export class EntrepriseComponent implements OnInit, OnDestroy  {
   isNewEntreprise = false;
   isModify = false;
 
-  constructor(private entrepriseService: EntrepriseService) { }
+  constructor(private entrepriseService: EntrepriseService, private router: Router) { }
 
   ngOnInit() {
     this.getCurrentEntreprise();
@@ -77,6 +78,10 @@ export class EntrepriseComponent implements OnInit, OnDestroy  {
   createNewEntreprise() {
     this.isNewEntreprise = false;
     this.isModify = true;
+  }
+
+  previousPage() {
+    this.router.navigate(['']);
   }
 
   ngOnDestroy() {

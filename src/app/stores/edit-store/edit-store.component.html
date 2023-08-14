@@ -48,6 +48,11 @@
     </div>
   </form>
 </div>
-<div class="alert alert-success" role="alert" *ngIf="isSucessSave && !isLoading">
-  Vos changements sont bien enregistrés !
+<div *ngIf="isSucessSave && !isLoading">
+  <div class="alert alert-success" role="alert">
+    Vos changements sont bien enregistrés !
+  </div>
+  <div>
+    <button type="button" class="btn btn-outline-primary" (click)="previousPage()">Retour</button>
+  </div>
 </div>
