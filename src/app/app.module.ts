@@ -18,6 +18,7 @@ import { RequestInterceptor } from './shared/interceptors/request.interceptor';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { StoreComponent } from './stores/store/store.component';
 import { EditStoreComponent } from './stores/edit-store/edit-store.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { EditStoreComponent } from './stores/edit-store/edit-store.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
