@@ -44,7 +44,7 @@
     <br/>
     <div class="d-inline-flexcol-md-6 text-center">
         <button class="btn btn-success" type="submit" [disabled]="!storeForm.valid">Enregister</button>
-        <button class="btn btn-success" type="button" (click)="cancel()">Annuler</button>
+        <ngbd-modal-focus [urlNavigation]="'/main/magasins'"></ngbd-modal-focus>
     </div>
   </form>
 </div>

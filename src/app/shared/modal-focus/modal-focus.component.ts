@@ -1,4 +1,5 @@
-import { Component, Type } from '@angular/core';
+import { Component, Input, Type } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -22,20 +23,30 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Non</button>
-			<button type="button" ngbAutofocus class="btn btn-outline-success" (click)="modal.close('Ok click')">Oui</button>
+			<button type="button" ngbAutofocus class="btn btn-outline-success" (click)="cancel()">Oui</button>
 		</div>
 	`,
 })
 export class NgbdModalConfirmAutofocus {
-	constructor(public modal: NgbActiveModal) {}
+	constructor(public modal: NgbActiveModal, private router: Router) {}
+
+	cancel(){
+		this.router.navigate([urlNavigation]);
+		this.modal.close('Ok click');
+	}
 }
+var urlNavigation: string;
 
 @Component({ selector: 'ngbd-modal-focus', templateUrl: './modal-focus.component.html' })
 export class NgbdModalFocus {
 
+	@Input()
+  	urlNavigation: string = null!;
+
 	constructor(private _modalService: NgbModal) {}
 
 	open() {
+		urlNavigation = this.urlNavigation;
 		this._modalService.open(NgbdModalConfirmAutofocus);
 	}
 }

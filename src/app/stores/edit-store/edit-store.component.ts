@@ -49,12 +49,8 @@ export class EditStoreComponent implements OnInit, OnDestroy {
     form.reset();
   }
 
-  cancel(){
-    this.router.navigate(['/main/magasins']);
-  }
-
   previousPage() {
-    this.router.navigate(['']);
+    this.router.navigate(['/main/magasins']);
   }
 
   ngOnDestroy() {
