@@ -21,10 +21,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       if(!!user) this.userName = user.firstname + ' ' + user.lastname
     });
   }
-
-  onLogout() {
-    this.authService.logout();
-  }
+  
 
   ngOnDestroy() {
     this.userSub.unsubscribe();
