@@ -1,22 +1,16 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Store } from './store.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoreService {
 
-  constructor(private http: HttpClient) {}
+  currentStores = new BehaviorSubject<Store[]>(null!);
 
-  getListStoreByIdEntreprise(idEntreprise: String): Store[] {
-    return [
-            new Store("test1", "test1", "test1"),
-            new Store("test2", "test2", "test2"),
-            new Store("test3", "test3", "test3")
-          ];
-  }
+  constructor(private http: HttpClient) {}
 
   getListStoreById(idEntreprise: string): Observable<Store[]> {
     return this.http
@@ -24,7 +18,12 @@ export class StoreService {
         '/stores.json?orderBy="idEntreprise"&equalTo="'+ idEntreprise + '"'
       ).pipe(
         map(storesWrapper => {
-          return Object.values(storesWrapper);
+          const stores = Object.values(storesWrapper);
+          stores.forEach((value, index) => {
+            value.idStore = Object.keys(storesWrapper)[index];
+          });
+          this.currentStores.next(stores);
+          return stores;
       }))
   }
   
@@ -34,5 +33,26 @@ export class StoreService {
       .post(
         '/stores.json', store
       );
+  }
+
+  deleteStore(idStore: string) {
+    this.removeStore(idStore, this.currentStores.getValue());
+    return this.http
+    .delete(
+      '/stores/' + idStore + '.json'
+    );
+  }
+
+  private removeStore(idStore: string, listStore: Store[]) {
+    let indexStore = 0;
+    for(let i = 0; i < listStore.length ; i++){
+      if(idStore === listStore[i].idStore){
+        indexStore = i;
+        break;
+      }
+    }
+    
+    listStore.splice(indexStore, 1);
+    this.currentStores.next(listStore.slice());
   }
 }

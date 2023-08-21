@@ -14,6 +14,7 @@ import {  Router } from '@angular/router';
 export class StoreListComponent  implements OnInit, OnDestroy {
 
   private entrepriseWrapperSub: Subscription = null!;
+  private storesSub: Subscription = null!;
   entreprise: Entreprise = null!;
   stores: Store[] = null!;
   editStore = false;
@@ -23,7 +24,9 @@ export class StoreListComponent  implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.entrepriseWrapperSub = this.entrepriseService.currentEntrepriseId.subscribe((entrepriseId: string) => {
       this.storeService.getListStoreById(entrepriseId).subscribe((stores: Store[]) => {
-        this.stores = stores.slice();
+        this.storesSub = this.storeService.currentStores.subscribe((stores: Store[]) => {
+          this.stores = stores.slice();
+        })
       });
     });
   }
@@ -34,6 +37,7 @@ export class StoreListComponent  implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.entrepriseWrapperSub.unsubscribe();
+    this.storesSub.unsubscribe();
   }
 
 }
