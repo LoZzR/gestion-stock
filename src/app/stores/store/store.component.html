@@ -2,8 +2,12 @@
     <div class="card-body">
       <h5 class="card-title">{{ store.title }}</h5>
       <p class="card-text">{{ store.adress }}</p>
-      <a href="#" class="card-link">Détails</a>
-      <a href="#" class="card-link">Modifier</a>
-      <button type="button" class="btn btn-link" (click)="deleteStore()">Supprimer</button>
+    </div>
+    <div class="card-body">
+      <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+      <button type="button" class="btn btn-outline-primary">Détails</button>
+      <button type="button" class="btn btn-outline-success">Modifier</button>
+      <button type="button" class="btn btn-outline-danger" (click)="deleteStore()">Supprimer</button>
+    </div>
     </div>
 </div>
