@@ -23,6 +23,7 @@ const routes: Routes = [
       { path: "entreprise", component: EntrepriseComponent },
       { path: "magasins", component: StoreListComponent },
       { path: "edit-magasin", component: EditStoreComponent },
+      { path: "edit-magasin/:storeId", component: EditStoreComponent },
       { path: "articles", component: ArticleListComponent,}
   ]}
 ];

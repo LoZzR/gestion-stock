@@ -15,7 +15,7 @@
         id="title"
         class="form-control"
         name="title"
-        ngModel
+        [(ngModel)]="store.title"
         required
         minlength="2"
         #title="ngModel"
@@ -33,7 +33,7 @@
         type="text"
         class="form-control"
         name="adress"
-        ngModel
+        [(ngModel)]="store.adress"
         required
         #adress="ngModel"
       />

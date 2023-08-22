@@ -26,12 +26,24 @@ export class StoreService {
           return stores;
       }))
   }
+
+  getStoreById(idStore: string) {
+    return this.http
+      .get<Store>('/stores/' + idStore + '.json');
+  }
   
   addStore(title: string, adress: string, idEntreprise: string) {
     const store = new Store(title, adress, idEntreprise);
     return this.http
       .post(
         '/stores.json', store
+      );
+  }
+
+  editSore(idStore: string, store: Store) {
+    return this.http
+      .put(
+        '/stores/' + idStore + '.json', store
       );
   }
 

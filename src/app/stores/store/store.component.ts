@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '../store.model';
 import { StoreService } from '../store.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-store',
@@ -12,9 +13,13 @@ export class StoreComponent implements OnInit {
   @Input()
   store: Store = null!;
 
-  constructor(private storeService: StoreService) { }
+  constructor(private storeService: StoreService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  editSotre() {
+    this.router.navigate(['/main/edit-magasin', this.store.idStore]);
   }
 
   deleteStore() {
