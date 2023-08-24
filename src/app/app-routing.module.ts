@@ -10,6 +10,7 @@ import { AuthGuard } from './shared/services/auth.guard';
 import { StoreListComponent } from './stores/store-list/store-list.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { EditStoreComponent } from './stores/edit-store/edit-store.component';
+import { EditArticleComponent } from './articles/edit-article/edit-article.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/main", pathMatch: "full" },
@@ -24,7 +25,9 @@ const routes: Routes = [
       { path: "magasins", component: StoreListComponent },
       { path: "edit-magasin", component: EditStoreComponent },
       { path: "edit-magasin/:storeId", component: EditStoreComponent },
-      { path: "articles", component: ArticleListComponent,}
+      { path: "articles", component: ArticleListComponent },
+      { path: "edit-article", component: EditArticleComponent },
+      { path: "edit-article/:articles", component: EditArticleComponent },
   ]}
 ];
 

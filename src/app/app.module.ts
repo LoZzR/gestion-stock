@@ -20,6 +20,8 @@ import { StoreComponent } from './stores/store/store.component';
 import { EditStoreComponent } from './stores/edit-store/edit-store.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdModalFocus } from './shared/modal-focus/modal-focus.component';
+import { EditArticleComponent } from './articles/edit-article/edit-article.component';
+import { ArticleComponent } from './articles/article/article.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { NgbdModalFocus } from './shared/modal-focus/modal-focus.component';
     LoadingSpinnerComponent,
     StoreComponent,
     EditStoreComponent,
-    NgbdModalFocus
+    NgbdModalFocus,
+    EditArticleComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule,

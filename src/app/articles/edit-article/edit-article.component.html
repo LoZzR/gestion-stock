@@ -1,0 +1,59 @@
+<div class="d-flex">
+    <div *ngIf="!isSucessSave && isLoading" style="text-align: center;">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+      <form
+      name="form"
+      #articleForm="ngForm"
+      (ngSubmit)="addArticle(articleForm)"
+      *ngIf="!isSucessSave && !isLoading"
+    >
+      <div class="d-inline-flex align-items-center col-md-12 mb-3">
+        <label for="title">Nom article :</label>
+        <input
+          type="text"
+          id="title"
+          class="form-control"
+          name="title"
+          [(ngModel)]="article.title"
+          required
+          minlength="2"
+          #title="ngModel"
+        />
+        <div class="alert-danger" *ngIf="title.invalid && (title.dirty || title.touched)">
+          <div *ngIf="title.errors?.['required']">le nom de du article est obligatoire</div>
+          <div *ngIf="title.errors?.['minlength']">
+            La taille du nom du article minumum est 2 caratères
+          </div>
+        </div>
+      </div>
+      <div class="d-inline-flex align-items-center col-md-12 mb-3">
+        <label for="description">Description du article :</label>
+        <input
+          type="text"
+          class="form-control"
+          name="description"
+          [(ngModel)]="article.description"
+          required
+          #description="ngModel"
+        />
+        <div class="alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+          <div *ngIf="description.errors?.['required']">la description du article est obligatoire</div>
+        </div>
+      </div>
+      <br/>
+      <div class="d-inline-flexcol-md-6 text-center">
+          <button class="btn btn-success" type="submit" [disabled]="!articleForm.valid">Enregister</button>
+          <ngbd-modal-focus [urlNavigation]="'/main/articles'"></ngbd-modal-focus>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="isSucessSave && !isLoading">
+    <div class="alert alert-success" role="alert">
+      Vos changements sont bien enregistrés !
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-primary" (click)="previousPage()">Retour</button>
+    </div>
+  </div>
+  
