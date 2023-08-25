@@ -32,8 +32,8 @@ export class ArticleService {
       .get<Article>('/articles/' + idArticle + '.json');
   }
   
-  addArticle(title: string, adress: string, idEntreprise: string) {
-    const article = new Article(title, adress, '', idEntreprise);
+  addArticle(title: string, adress: string, idStore: string, idEntreprise: string) {
+    const article = new Article(title, adress, idStore, idEntreprise);
     return this.http
       .post(
         '/articles.json', article

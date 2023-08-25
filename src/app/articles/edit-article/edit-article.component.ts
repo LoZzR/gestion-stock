@@ -55,7 +55,7 @@ export class EditArticleComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     if(this.idCurrentArticle === null) {
-      this.articleService.addArticle(form.value.title, form.value.adress, this.idCurrentEntreprise).subscribe(
+      this.articleService.addArticle(form.value.title, form.value.adress, form.value.idStore, this.idCurrentEntreprise).subscribe(
         resData => {
           this.isLoading = false;
           this.isSucessSave = true;
