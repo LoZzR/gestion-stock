@@ -5,6 +5,8 @@ import { ArticleService } from '../article.service';
 import { EntrepriseService } from 'src/app/entreprise/entreprise.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { StoreService } from 'src/app/stores/store.service';
+import { Store } from 'src/app/stores/store.model';
 
 @Component({
   selector: 'app-edit-article',
@@ -19,15 +21,22 @@ export class EditArticleComponent implements OnInit, OnDestroy {
   private idCurrentEntreprise: string = null!;
   private idCurrentArticle: string = null!;
   article: Article = new Article('', '', '', '', '');
+  stores: Store[] = [];
 
   constructor(private articleService: ArticleService,
               private entrepriseService: EntrepriseService,
+              private storeService: StoreService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.entrepriseWrapperSub = this.entrepriseService.currentEntrepriseId.subscribe((entrepriseId: string) => {
       this.idCurrentEntreprise = entrepriseId;
+      this.storeService.getListStoreById(entrepriseId).subscribe((stores: Store[]) => {
+        this.stores = stores;
+      }
+
+      );
     });
     const isArticleParams = this.route.snapshot.paramMap.get('articleId');
     if(isArticleParams !== null) {

@@ -21,14 +21,14 @@
           #title="ngModel"
         />
         <div class="alert-danger" *ngIf="title.invalid && (title.dirty || title.touched)">
-          <div *ngIf="title.errors?.['required']">le nom de du article est obligatoire</div>
+          <div *ngIf="title.errors?.['required']">le nom de de l'article est obligatoire</div>
           <div *ngIf="title.errors?.['minlength']">
-            La taille du nom du article minumum est 2 caratères
+            La taille du nom de l'article minumum est 2 caratères
           </div>
         </div>
       </div>
       <div class="d-inline-flex align-items-center col-md-12 mb-3">
-        <label for="description">Description du article :</label>
+        <label for="description">Description de l'article :</label>
         <input
           type="text"
           class="form-control"
@@ -38,7 +38,24 @@
           #description="ngModel"
         />
         <div class="alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
-          <div *ngIf="description.errors?.['required']">la description du article est obligatoire</div>
+          <div *ngIf="description.errors?.['required']">la description de l'article est obligatoire</div>
+        </div>
+      </div>
+      <br/>
+      <div class="d-inline-flex align-items-center col-md-12 mb-3">
+        <label for="description">Magasin de l'article :</label>
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          name="store"
+          required
+          [(ngModel)]="article.idStore"
+          #store="ngModel">
+          <option selected></option>
+          <option *ngFor="let store of stores" [ngValue]="store.idStore">{{store.title}}</option>
+        </select>
+        <div class="alert-danger" *ngIf="store.invalid && (store.dirty || store.touched)">
+          <div *ngIf="store.errors?.['required']">le magasin de l'article est obligatoire</div>
         </div>
       </div>
       <br/>
