@@ -27,7 +27,7 @@ const routes: Routes = [
       { path: "edit-magasin/:storeId", component: EditStoreComponent },
       { path: "articles", component: ArticleListComponent },
       { path: "edit-article", component: EditArticleComponent },
-      { path: "edit-article/:articles", component: EditArticleComponent },
+      { path: "edit-article/:articleId", component: EditArticleComponent },
   ]}
 ];
 
